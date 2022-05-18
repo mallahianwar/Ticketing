@@ -1,0 +1,212 @@
+﻿@using library.elegalhubs.com.lms.General;
+@using Microsoft.AspNetCore.Identity
+@using library.elegalhubs.com.lms.Admin
+@inject SignInManager<Users> SignInManager
+@using lms.elegalhubs.com.Areas.Admin.Models
+@using lms.elegalhubs.com.Data
+@inject ApplicationDbContext _context
+
+@{
+    Massages msg = new Massages();
+    if (TempData["msg"] != null)
+    {
+        msg = TempData["msg"] as Massages;
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<!--begin::Head-->
+<head>
+    <base href="">
+    <title>Elegal Hub - for IT solutions.</title>
+    <meta name="description" content="The most advanced Admin web app ." />
+    <meta name="keywords" content="Resturants, Orders, Payment, Food, Driver, Delivery, Food Delivery" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Footy Link - Resturant management web app" />
+    <meta property="og:url" content="#" />
+    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <link rel="canonical" href="#" />
+    <link rel="shortcut icon" href="@Url.Content("~/demo1/assets/media/logos/favicon.ico")" />
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    @{await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/LayoutParts/_Style.cshtml");}
+    @RenderSection("Style", required: false)
+    <style>
+        @@media (min-width: 1400px) {
+            .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+                max-width: 1600px;
+            }
+        }
+    </style>
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+    <!--begin::Main-->
+    <!--begin::Root-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Aside-->
+            @{await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/LayoutParts/_AsideMenu.cshtml");}
+
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                <!--begin::Header-->
+                @{await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/LayoutParts/_Header.cshtml");}
+                <!--end::Header-->
+
+                <div class="toolbar" id="kt_toolbar">
+                    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+                        <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">
+                                Dashboard
+                                <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
+
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">@ViewData["Title"]</small>
+                            </h1>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Post-->
+                    <div class="post d-flex flex-column-fluid" id="kt_post">
+                        <!--begin::Container-->
+                        <div id="kt_content_container" class="container-xxl">
+                            @{
+                                if (!ViewData.ModelState.IsValid)
+                                {
+                                    <!--begin::Alert-->
+                                    <div class="alert alert-dismissible bg-light-danger d-flex flex-column flex-sm-row pt-5  pr-5 pb-0 mb-5" style="padding-right: 1rem;">
+                                        <!--begin::Wrapper-->
+                                        <div class="d-flex flex-column pe-0 pe-sm-10">
+                                            <!--begin::Title-->
+                                            <!--end::Title-->
+                                            <!--begin::Content-->
+                                            <div asp-validation-summary="All" class="text-danger"></div>
+                                        </div>
+                                        <!--end::Wrapper-->
+                                        <!--begin::Close-->
+                                        <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                            <span class="svg-icon svg-icon-1 svg-icon-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                        <!--end::Close-->
+                                    </div>
+                                    <!--end::Alert-->
+
+                                }
+                            }
+                            @RenderBody()
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Post-->
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                @{await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/LayoutParts/_Footer.cshtml");}
+
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--begin::Modals-->
+    <!--begin::Modal - Create App-->
+    @{await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/LayoutParts/_Modal.cshtml");}
+    <!--end::Modal - Create App-->
+    <!--end::Modals-->
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black" />
+                <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="black" />
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+    <!--end::Main-->
+    <script>
+            function gettoken() {
+            var token = '@Html.AntiForgeryToken()';
+            token = $(token).val();
+            return token;
+        }
+    </script>
+    <!--begin::Javascript-->
+    @{await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/LayoutParts/_Scripts.cshtml");}
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <script src="@Url.Content("~/microsoft/signalr/dist/browser/signalr.js")"></script>
+        <script src="@Url.Content("~/js/ConnectSignalR.js")"></script>
+    }
+    <!--end::Javascript-->
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @RenderSection("Script", required: false)
+    <script src="@Url.Content("~/js/site.js")"></script>
+
+    <script>
+        $(function () {
+            //KTUsersList.init();
+            function msg(text, icon) {
+            Swal.fire({
+                text: '@msg.text',
+                icon: '@msg.icon',
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass:
+                {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+            }
+        })
+    </script>
+    <script>
+        $(function () {
+            var current = location.pathname;
+            //debugger;
+            $('.aside-menu .menu-item a.menu-link').each(function () {
+                var $this = $(this);
+                var href = $this.attr('href');
+                if (current == href) {
+                    $this.addClass('active');
+                }
+            })
+        })
+        $(".notification").click(function () {
+                $(".notification-badge").text("0")
+                @{
+                    List<Notifications> notify = _context.Notifications.ToList();
+                    foreach(var m in notify)
+                    {
+                        m.Status = "1";
+                        _context.SaveChanges();
+                    }
+
+                }
+
+            })
+    </script>
+</body>
+<!--end::Body-->
+</html>

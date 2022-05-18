@@ -1,0 +1,122 @@
+﻿@*@using System.Web.Optimization*@
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Script{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnsend").click(function () {
+                send();
+            });
+            getmyfriends();
+            function getmyfriends()
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("friendlist")",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: "json",
+                    success: function (r) {
+                        var ddlfrined = $("[id*=ddlfriend]");
+                         ddlfrined.empty().append('<option selected="selected" value="0">select</option>');
+                        for (var i = 0; i < r.length; i++) {
+                            debugger;
+                            ddlfrined.append($("<option></option>").val(r[i].id).html(r[i].email));
+                        }
+                    },
+                    error: function (r) {
+                        alert("error");
+                    }
+                });
+            }
+            setInterval(function () {
+                $.ajax({
+                    type: "POST",
+
+                    data: {},
+                    url: "@Url.Action("receive")",
+                   
+                    success: function (response) {
+                        var data = $("#divmsg").html();
+                        if (response != null) {
+                            $("#divmsg").html(data + "<br>Friend:" + response);
+                        }
+
+                    },
+                    error: function (response) {
+
+                    }
+                });
+            }, 5000);
+            function send() {
+                debugger;
+                var message = $("#txtmsg").val();
+                var friend = $("#ddlfriend").val();
+                
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    data: { message: message, friend: friend},
+                    url: "@Url.Action("sendmsg")",
+                    
+                    success: function (response) {
+                        var data1 = $("#divmsg").html();
+                        $("#divmsg").html(data1 + "<br>Me :" + message);
+                        $("#txtmsg").val("");
+                    },
+                    error: function (response) {
+
+                    }
+                });
+            }
+        });
+    </script>
+}
+<!DOCTYPE html>
+
+<nav class="nav navbar-default">
+    <div class="navbar-brand">
+        <span style="float:right;">@*@Session["username"].ToString()*@</span>
+    </div>
+</nav>
+<br />
+<div class="clearfix"></div>
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+               
+                    <select id="ddlfriend" name="ddlfriend" class="form-control">
+                    </select>
+          
+                <div class="form-group">
+                    <input type="text" name="txtmsg" id="txtmsg" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="button" value="send" class="btn btn-success" name="btnsend" id="btnsend" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            Messages
+                        </div>
+                        <div class="panel-footer" style="min-height:400px;">
+                            <div id="divmsg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div>
+</div>

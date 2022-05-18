@@ -1,0 +1,114 @@
+﻿@model lms.elegalhubs.com.Areas.Admin.Models.Notifications
+
+@{
+    ViewData["Title"] = "Create";
+}
+@section Style{
+    <link href="@Url.Content("~/demo1/assets/plugins/custom/summernote/summernote-lite.css")" rel="stylesheet" />
+}
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="Module" class="control-label"></label>
+                <input asp-for="Module" class="form-control" />
+                <span asp-validation-for="Module" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="NotificationTypeId" class="control-label"></label>
+                <select asp-for="NotificationTypeId" class ="form-control" asp-items="ViewBag.NotificationTypeId"></select>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="Purpose" class="control-label"></label>
+                <input asp-for="Purpose" class="form-control" />
+                <span asp-validation-for="Purpose" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="ActivityDate" class="control-label"></label>
+                <input asp-for="ActivityDate" class="form-control" />
+                <span asp-validation-for="ActivityDate" class="text-danger"></span>
+            </div>*@
+            
+           
+            <div class="form-group col-md-8 mb-3 fv-row">                
+                 <label asp-for="UserTo" class="required fs-6 fw-bold mb-2"></label>
+                 <select asp-for="UserTo" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select"
+                            asp-items="ViewBag.UserTo">
+                    <option value="">All User</option>
+                 </select>                    
+            </div>
+            
+            <div class="row g-9">
+                <!--begin::Col-->
+                <div class="col-md-8 fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <span class="required">Subject</span>
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                    </label>
+                    <!--end::Label-->
+                    <input name="Subject" class="form-control" placeholder="Write your subject"/>
+
+                </div>
+                <!--end::Col-->
+            </div>
+
+            <div class="row g-9">
+                <!--begin::Col-->
+                <div class="col-md-8 fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <span class="required">Message</span>
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                    </label>
+                    <!--end::Label-->
+                    <textarea name="Message" class="form-control" id="summernote" placeholder="Write your message" rows="4"></textarea>
+
+                </div>
+                <!--end::Col-->
+            </div>
+
+            @*<div class="form-group">
+                <label asp-for="UserFrom" class="control-label"></label>
+                <select asp-for="UserFrom" class ="form-control" asp-items="ViewBag.UserFrom"></select>
+            </div>*@
+
+            
+            <div class="form-group text-left mt-5">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Script{
+    @*<script src="~/demo1/assets/plugins/custom/summernote/summernote-bs4.js"></script>*@
+    @*<script src="@Url.Content("~/demo1/assets/plugins/custom/summernote/summernote-lite.js")"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Write comment',
+                tabsize: 2,
+                height: 100
+            });
+        });
+    </script>*@
+
+}

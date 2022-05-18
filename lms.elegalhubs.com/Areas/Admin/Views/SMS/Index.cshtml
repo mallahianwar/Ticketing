@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Create">
+            <label>Message : </label>
+            <input name="Msg" class="form-control" />
+            <label>To : </label>
+            <input name="To" class="form-control" />
+            <label>From : </label>
+            <input name="From" class="form-control" />
+            <button type="submit" class="btn btn-success">Send</button>
+        </form>
+    </div>
+</div>
+

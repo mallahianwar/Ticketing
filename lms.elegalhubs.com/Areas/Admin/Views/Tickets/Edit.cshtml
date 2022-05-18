@@ -1,0 +1,283 @@
+﻿@model lms.elegalhubs.com.Areas.Admin.Models.TicketIndexViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            Edit Ticket No # @Model.Tickets.TicketNumber
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.AntiForgeryToken()
+            <!--begin::Input group-->
+            <input type="hidden" asp-for="Tickets.Id" />
+            <input type="hidden" name="Id" value="@Model.Tickets.Id" />
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                <div class="col-md-8 fv-row">
+                    <!--begin::Label-->
+                    <label asp-for="Tickets.Subject" class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <span class="">Subject</span>
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a subject for your issue"></i>
+                    </label>
+                    <!--end::Label-->
+                    <input disabled type="text" class="form-control form-control-solid" placeholder="Enter your ticket subject" asp-for="Tickets.Subject" />
+                    <span asp-validation-for="Tickets.Subject" class="text-danger"></span>
+
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.ProjectId" class="fs-6 fw-bold mb-2"></label>
+                    <select  disabled asp-for="Tickets.ProjectId" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Project"
+                            asp-items="ViewBag.ProjectId">
+                        <option value="">Select a Project ...</option>
+                    </select>
+                    <span asp-validation-for="Tickets.ProjectId" class="text-danger"></span>
+
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.TicketTypeId" class="required fs-6 fw-bold mb-2"></label>
+                    <select disabled asp-for="Tickets.TicketTypeId" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a ticket type"
+                            asp-items="ViewBag.TicketTypeId">
+                        <option value="">Select a ticket type...</option>
+                    </select>
+                    <span asp-validation-for="Tickets.TicketTypeId" class="text-danger"></span>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.CategoryId" class="required fs-6 fw-bold mb-2">Category</label>
+                    <select disabled asp-for="Tickets.CategoryId" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Category type"
+                            asp-items="ViewBag.CategoryId">
+                        <option value="">Select a Category type...</option>
+                    </select>
+                    <span asp-validation-for="Tickets.CategoryId" class="text-danger"></span>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.PreferredContactMethodId" class="required fs-6 fw-bold mb-2">Preferred  Contact Method</label>
+                    <select disabled asp-for="Tickets.PreferredContactMethodId" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Preferred Contact Method"
+                            asp-items="ViewBag.PreferredContactMethodId">
+                        <option value="">Select a Preferred Contact Method...</option>
+                    </select>
+                    <span asp-validation-for="Tickets.PreferredContactMethodId" class="text-danger"></span>
+                </div>
+                <!--end::Col-->
+                
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.DepartmentId" class="required fs-6 fw-bold mb-2">Department</label>
+                    <select disabled asp-for="Tickets.DepartmentId" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Departmen"
+                            asp-items="ViewBag.DepartmentId">
+                        <option value="">Select a Department...</option>
+                    </select>
+                    <span asp-validation-for="Tickets.DepartmentId" class="text-danger"></span>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.ContactId" class="fs-6 fw-bold mb-2">Contact</label>
+                    <select disabled asp-for="Tickets.ContactId" class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Select a Contact"
+                            asp-items="ViewBag.ContactId">
+                        <option value="">Select a Contact ...</option>
+                    </select>
+                    <span asp-validation-for="Tickets.ContactId" class="text-danger"></span>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.PriorityId" class="fs-6 fw-bold mb-2">Priority</label>
+                    <select asp-for="Tickets.PriorityId" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Priority"
+                            asp-items="ViewBag.PriorityId">
+                        @*<option value="">Select a Priority ...</option>*@
+                    </select>
+                    <span asp-validation-for="Tickets.PriorityId" class="text-danger"></span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.StatusId" class="fs-6 fw-bold mb-2"></label>
+                    <select asp-for="Tickets.StatusId" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Status"
+                            asp-items="ViewBag.StatusId">
+                        @*<option value="">Select a Status ...</option>*@
+                    </select>
+                    <span asp-validation-for="Tickets.StatusId" class="text-danger"></span>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label asp-for="TicketDetails.StartDateTime" class="fs-6 fw-bold mb-2">Start Date</label>
+                    @*begin::Input*@
+                    <div class="position-relative d-flex align-items-center">
+                        @*begin::Icon*@
+                        <div class="symbol symbol-20px me-4 position-absolute ms-4">
+                            <span class="symbol-label bg-secondary">
+                                @*begin::Svg Icon | path: icons/duotune/general/gen025.svg*@
+                                <span class="svg-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
+                                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
+                                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
+                                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+                                    </svg>
+                                </span>
+                                @*end::Svg Icon*@
+                            </span>
+                        </div>
+                        @*end::Icon
+                            begin::Datepicker*@
+                        <input class="form-control form-control-solid ps-12" placeholder="Select a date" asp-for="TicketDetails.StartDateTime" />
+                        <span asp-validation-for="TicketDetails.StartDateTime" class="text-danger"></span>
+
+                        @*end::Datepicker*@
+                    </div>
+                    @*end::Input*@
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 fv-row">
+                    <label class="fs-6 fw-bold mb-2" asp-for="TicketDetails.EndDateTime">End Date</label>
+                    <!--begin::Input-->
+                    <div class="position-relative d-flex align-items-center">
+                        <!--begin::Icon-->
+                        <div class="symbol symbol-20px me-4 position-absolute ms-4">
+                            <span class="symbol-label bg-secondary">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                <span class="svg-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
+                                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
+                                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
+                                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                        </div>
+                        <!--end::Icon-->
+                        <!--begin::Datepicker-->
+                        <input class="form-control form-control-solid ps-12" placeholder="Select a date" asp-for="TicketDetails.EndDateTime" />
+                        <span asp-validation-for="TicketDetails.EndDateTime" class="text-danger"></span>
+                        <!--end::Datepicker-->
+                    </div>
+                    <!--end::Input-->
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                @*<div class="col-md-4 fv-row">
+                    <label asp-for="Tickets.AssignTo" class="fs-6 fw-bold mb-2">Assign To</label>
+                    <select asp-for="Tickets.AssignTo" class="form-select form-select-solid" data-control="select2" data-hide-search="false"
+                            data-placeholder="Select a Employee to assign ticket"
+                            asp-items="ViewBag.AssignTo">
+                        <option value="">Select a Employee to assign ticket...</option>
+                    </select>
+                    <span asp-validation-for="Tickets.AssignTo" class="text-danger"></span>
+                </div>*@
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-8 fv-row">
+                <label asp-for="TicketDetails.Description" class="fs-6 fw-bold mb-2 required">Description</label>
+                <textarea disabled class="form-control form-control-solid" rows="4" asp-for="TicketDetails.Description" placeholder="Type your ticket description"></textarea>
+                <span asp-validation-for="TicketDetails.Description" class="text-danger"></span>
+
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <!--<div class="fv-row mb-8">
+                <label class="fs-6 fw-bold mb-2">Attachments</label>-->
+                <!--begin::Dropzone-->
+                <!--<div class="dropzone position-relative" id="kt_modal_create_ticket_attachments">-->
+                    <!--begin::Message-->
+                    <!--<input id="Attachment" multiple name="Attachment" type="file" style="width: 100%;min-height: 100%;display: inline-block;
+                        position: absolute;z-index: 1;width: 100%;height: 50px;top: 0;left: 0;opacity: 0;cursor: pointer;  " />
+                    <div class="dz-message needsclick align-items-center">-->
+                        <!--begin::Icon-->
+                        <!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
+                        <!--<span class="svg-icon svg-icon-3hx svg-icon-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 12.6L12.7 9.3C12.3 8.9 11.7 8.9 11.3 9.3L8 12.6H11V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18V12.6H16Z" fill="black" />
+                                <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
+                            </svg>
+                        </span>-->
+                        <!--end::Svg Icon-->
+                        <!--end::Icon-->
+                        <!--begin::Info-->
+                        <!--<div class="ms-4">
+                            <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop files here or click to upload.</h3>
+                            <span class="fw-bold fs-7 text-gray-400">Upload files</span>
+                        </div>-->
+                        <!--end::Info-->
+                    <!--</div>
+                </div>-->
+                <!--end::Dropzone-->
+            <!--</div>-->
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <!--<div class="mb-15 fv-row">-->
+            <!--begin::Wrapper-->
+            <!--<div class="d-flex flex-stack">-->
+            <!--begin::Label-->
+            <!--<div class="fw-bold me-5">
+                <label class="fs-6">Notifications</label>
+                <div class="fs-7 text-gray-400">Allow Notifications by Phone or Email</div>
+            </div>-->
+            <!--end::Label-->
+            <!--begin::Checkboxes-->
+            <!--<div class="d-flex align-items-center">-->
+            <!--begin::Checkbox-->
+            <!--<label class="form-check form-check-custom form-check-solid me-10">
+                <input class="form-check-input h-20px w-20px" type="checkbox" name="notifications[]" value="email" checked="checked" />
+                <span class="form-check-label fw-bold">Email</span>
+            </label>-->
+            <!--end::Checkbox-->
+            <!--begin::Checkbox-->
+            <!--<label class="form-check form-check-custom form-check-solid">
+                <input class="form-check-input h-20px w-20px" type="checkbox" name="notifications[]" value="phone" />
+                <span class="form-check-label fw-bold">Phone</span>
+            </label>-->
+            <!--end::Checkbox-->
+            <!--</div>-->
+            <!--end::Checkboxes-->
+            <!--</div>-->
+            <!--end::Wrapper-->
+            <!--</div>-->
+            <!--end::Input group-->
+            <!--begin::Actions-->
+            <div class="text-center">
+                <a asp-action="Index" type="reset" id="kt_modal_new_ticket_cancel" class="btn btn-light me-3">Cancel</a>
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+            <!--end::Actions-->
+        </form>
+    </div>
+</div>
+
+

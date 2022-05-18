@@ -1,0 +1,296 @@
+﻿@model IEnumerable<library.elegalhubs.com.lms.Admin.Users>
+@using library.elegalhubs.com.lms.Admin;
+@using library.elegalhubs.com.lms.Admin.Chat;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Mvc;
+@using lms.elegalhubs.com.Helpers;
+
+
+@{
+    ViewData["Title"] = "InternalChat";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<string> activeUsers = MessageHub.users;
+}
+@section Style{
+    <style>
+        .tox-tinymce{
+            height : 50px !important
+        }
+        .tox-statusbar__text-container{
+            display : none !important
+        }
+    </style>
+}
+<!--begin::Layout-->
+<div class="d-flex flex-column flex-lg-row">
+    <!--begin::Sidebar-->
+    <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
+        <!--begin::Contacts-->
+        <div class="card card-flush">
+            <!--begin::Card header-->
+            <div class="card-header pt-7" id="kt_chat_contacts_header">
+                <!--begin::Form-->
+                <form class="w-100 position-relative" autocomplete="off">
+                    <!--begin::Icon-->
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                    <span class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <!--end::Icon-->
+                    <!--begin::Input-->
+                    <input type="text" class="form-control form-control-solid px-15" name="search" value="" placeholder="Search by username or email..." />
+                    <!--end::Input-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-5" id="kt_chat_contacts_body">
+                <!--begin::List-->
+                <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px">
+                    @foreach (var item in Model)
+                    {
+                        <!--begin::User-->
+                        <div class="d-flex flex-stack py-4">
+                            <!--begin::Details-->
+                            <div class="d-flex align-items-center">
+                                <!--begin::Avatar-->
+                                <div class="symbol symbol-45px symbol-circle">
+                                    @if (item.Avtar != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.Avtar);
+                                        var img = string.Format("data:image/jpg;base64,{0}", base64);
+                                        //<img src="@img" width="100" height="100" />
+                                        <img alt="Pic" src="@img" />
+                                        <div class="symbol-badge bg-@(activeUsers.Where(p => p.Contains(item.Id)).ToList().Count > 0 ? "success" : "light")   start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+
+                                    }
+                                    else
+                                    {
+                                        <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">@item.FullName.Substring(0, 1)</span>
+                                        <div class="symbol-badge bg-@(activeUsers.Where(p => p.Contains(item.Id)).ToList().Count > 0 ? "success" : "light")   start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+                                    }
+                                </div>
+                                <!--end::Avatar-->
+                                <!--begin::Details-->
+                                <div class="ms-5">
+                                    <a asp-action="InternalChat" asp-route-userId="@item.Id" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">@item.FullName</a>
+                                    <div class="fw-bold text-muted">@item.Email</div>
+                                </div>
+                                <!--end::Details-->
+                            </div>
+                            <!--end::Details-->
+                            <!--begin::Lat seen-->
+                            <div class="d-flex flex-column align-items-end ms-2">
+                                @*<span class="text-muted fs-7 mb-1">20 hrs</span>*@
+                            </div>
+                            <!--end::Lat seen-->
+                        </div>
+                        <!--end::User-->
+                        <!--begin::Separator-->
+                        <div class="separator separator-dashed d-none"></div>
+                        <!--end::Separator-->
+                    }
+                </div>
+                <!--end::List-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Contacts-->
+    </div>
+    <!--end::Sidebar-->
+    @{
+        if ((Users)ViewBag.User != null)
+        {
+            Users usr = (Users)ViewBag.User;
+            <!--begin::Content-->
+            <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+                
+                <!--begin::Messenger-->
+                <div class="card" id="kt_chat_messenger">
+                    <!--begin::Card header-->
+                    <div class="card-header" id="kt_chat_messenger_header">
+                        <!--begin::Title-->
+                        <div class="card-title">
+                            <!--begin::User-->
+                            <div class="d-flex justify-content-center flex-column me-3">
+                                <a href="#" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1">@usr.FullName</a>
+                                <!--begin::Info-->
+                                <div class="mb-0 lh-1">
+                                     <span class="badge badge-@(activeUsers.Where(p => p.Contains(usr.Id)).ToList().Count > 0 ? "success" : "light") badge-circle w-10px h-10px me-1"></span>
+                                     <span class="fs-7 fw-bold text-muted">
+                                         
+                                         @(activeUsers.Where(p => p.Contains(usr.Id)).ToList().Count > 0 ? "Active" : "Not Active")
+
+                                     </span>
+                                </div>
+                                <!--end::Info-->
+                            </div>
+                            <!--end::User-->
+                        </div>
+                        <!--end::Title-->
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div style="min-height:150px" class="card-body" id="kt_chat_messenger_body">
+                        <!--begin::Messages-->
+                        <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-userid="@usr.Id" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer" data-kt-scroll-wrappers="#kt_content, #kt_chat_messenger_body" data-kt-scroll-offset="-2px">
+
+                            @{
+                                if (ViewBag.Messages != null)
+                                {
+                                    @foreach (var msg in ViewBag.Messages)
+                                    {
+                                        if (msg.UserFrom == ViewBag.crntusr)
+                                        {
+                                            <div class="" data-kt-element="template-out">
+                                                <!--begin::Message(out)-->
+                                                <div class="d-flex justify-content-end mb-10">
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex flex-column align-items-end">
+                                                        <!--begin::User-->
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <!--begin::Details-->
+                                                            <div class="me-3">
+                                                                <span class="text-muted fs-7 mb-1">
+                                                                   @GeneralFunc.GetInterval(msg.DateTime, DateTime.Now)
+                                                                </span>
+                                                                <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">
+                                                                    
+                                                                    You
+                                                                </a>
+                                                            </div>
+                                                            <!--end::Details-->
+                                                            <!--begin::Avatar-->
+                                                            <div class="symbol symbol-35px symbol-circle">
+                                                                @if (msg.Sender.Avtar != null)
+                                                                {
+                                                                    var base64 = Convert.ToBase64String(msg.Sender.Avtar);
+                                                                    var img = string.Format("data:image/jpg;base64,{0}", base64);
+                                                                    <img alt="Pic" src="@img" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">@msg.Sender.FullName.Substring(0, 1)</span>
+                                                                }
+                                                            </div>
+                                                            <!--end::Avatar-->
+                                                        </div>
+                                                        <!--end::User-->
+                                                        <!--begin::Text-->
+                                                        <div class="p-5 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end" data-kt-element="message-text">
+                                                            @Html.Raw(msg.Content)
+                                                        </div>
+                                                        <!--end::Text-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </div>
+                                                <!--end::Message(out)-->
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="" data-kt-element="template-in">
+                                                <!--begin::Message(in)-->
+                                                <div class="d-flex justify-content-start mb-10">
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex flex-column align-items-start">
+                                                        <!--begin::User-->
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <!--begin::Avatar-->
+                                                            <div class="symbol symbol-35px symbol-circle">
+                                                                @if (msg.Sender.Avtar != null)
+                                                                {
+                                                                    var base64 = Convert.ToBase64String(msg.Sender.Avtar);
+                                                                    var img = string.Format("data:image/jpg;base64,{0}", base64);
+                                                                    <img alt="Pic" src="@img" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">@msg.Sender.FullName.Substring(0, 1)</span>
+                                                                }
+                                                            </div>
+                                                            <!--end::Avatar-->
+                                                            <!--begin::Details-->
+                                                            <div class="ms-3">
+                                                                <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">@msg.Sender.FullName</a>
+                                                                <span class="text-muted fs-7 mb-1">
+                                                                    @GeneralFunc.GetInterval(msg.DateTime, DateTime.Now)
+                                                                </span>
+                                                            </div>
+                                                            <!--end::Details-->
+                                                        </div>
+                                                        <!--end::User-->
+                                                        <!--begin::Text-->
+                                                        <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">
+                                                            @Html.Raw(msg.Content)
+                                                        </div>
+                                                        <!--end::Text-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </div>
+                                                <!--end::Message(in)-->
+                                            </div>
+                                                
+                                        }
+                                     }
+
+                                }
+                             }
+                        </div>
+                        <!--end::Messages-->
+                    </div>
+                    <!--end::Card body-->
+                    <!--begin::Card footer-->
+                    <div class="card-footer pt-4" id="kt_chat_messenger_footer">
+                        <!--begin::Input-->
+                        <div id="tiny"  class="form-control arae form-control-flush mb-3" 
+                            rows="1" data-kt-element="input" placeholder="Type a message">
+                        </div>
+                        <!--end::Input-->
+                        <!--begin:Toolbar-->
+                        <div class="d-flex flex-stack mt-2">
+                            <!--begin::Actions-->
+                            <!--begin::Send-->
+                            <button data-usersender="@ViewBag.crntusr" data-userreceiver="@usr.Id" class="btn btn-primary" type="button" data-kt-element="send">Send</button>
+                            <!--end::Send-->
+                        </div>
+                        <!--end::Toolbar-->
+                    </div>
+                    <!--end::Card footer-->
+                </div>
+                <!--end::Messenger-->
+            </div>
+            <!--end::Content-->
+        }
+    }
+
+</div>
+<!--end::Layout-->
+
+@section Script{
+    <script>
+        var receiveUrl = "@Url.Action("receive")";
+        var sendUrl = "@Url.Action("sendmsg")";
+    </script>
+    <script src="@Url.Content("~/js/chat/InternalChat.js")"></script>
+    <script src="@Url.Content("~/demo1/assets/plugins/custom/tinymce/tinymce.bundle.js")"></script>
+   <script>
+       tinymce.init({
+          selector: "#tiny",  // change this value according to your HTML
+          plugins: "emoticons",
+          toolbar: "emoticons",
+          menubar: false,
+           height: 30,
+           inline : true
+        });
+        //$("body").on('click',"button",function(){
+        //    $("textarea").val($("#tinymce").html())
+        //})
+       
+   </script>
+}

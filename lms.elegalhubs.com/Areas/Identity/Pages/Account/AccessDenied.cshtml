@@ -1,0 +1,28 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+}
+@section Style{ 
+<style>
+    h1,h3,h6 {
+        color: red;
+    }
+
+
+</style>
+}
+<header>
+    <div class="card">
+        <div style="line-height:3" class="card-body text-center">
+            @*<i style="font-size:4rem" class="fa fa-window-close text-danger"></i>*@
+            <h1>@ViewData["Title"]</h1>
+            <h6 style="font-size : 25vh">403</h6>
+            <h3>You dont have permission to view this page.</h3>
+
+        </div>
+    </div>
+    
+</header>
+
+

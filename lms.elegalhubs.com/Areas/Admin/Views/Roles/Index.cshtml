@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
+
+<!--begin::Card-->
+<div class="card">
+    <!--begin::Card body-->
+    <div class="card-body pt-14">
+        <!--begin::Table-->
+        <form method="post" asp-action="addrole" asp-controller="roles">
+            <div class="input-group">
+                <input placeholder="Type the role name" style="width:30% !important;flex:none" name="roleName" class="form-control w-10px">
+                <span class="input-group-btn" style="margin-left:1rem">
+                    <button class="btn btn-success">Save</button>
+                </span>
+            </div>
+        </form>
+        <div class="table-responsive pt-7">
+            <table class="table border table-striped gy-7 gs-7" id="roleTable">
+
+                <thead>
+                    <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Id
+                        </th>
+                        @*<th style="width:10%">
+                            Actions
+                        </th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int i = 0;};   
+                    @foreach (var role in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @role.Name
+                            </td>
+                            <td>
+                                @role.Id
+                            </td>
+                            @*<td class="text-right">
+                                <div class="btn-group">
+                                    @if (role.Name != "SuperAdmin")
+                                    {
+                                        <a style='margin-right:16px' asp-controller="Permission" asp-action="Index" asp-route-roleId="@role.Id" class="dropdown-item">
+                                            <i class="fas fa-wrench"></i>  Permissions
+                                        </a>
+                                    }
+                                </div>
+                            </td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!--end::Table-->
+</div>
+    <!--end::Card body-->
+</div>
+<!--end::Card-->
+
+@section Script{
+    <script src="@Url.Content("~/js/Tickets/table.js")"></script>
+}

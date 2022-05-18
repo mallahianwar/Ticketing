@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Style{
+
+    @*<link href="~/demo1/assets/plugins/custom/summernote/summernote-bs4.css" rel="stylesheet" />*@
+    <link href="@Url.Content("~/demo1/assets/plugins/custom/summernote/summernote-lite.css")" rel="stylesheet" />
+    <style>
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            line-height: 70px;
+            border-radius: 5px;
+            text-align: center;
+            opacity: 0.5
+        }
+
+            .icon-container i {
+                font-size: 25px
+            }
+    </style>
+
+}
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Create">
+            <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                <div class="col-md-8 fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <span class="required">Subject</span>
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                    </label>
+                    <!--end::Label-->
+                    <input name="Subject" type="text" class="form-control form-control-solid" placeholder="Enter your Subject" />
+                </div>
+                <!--end::Col-->
+
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                <div class="col-md-8 fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <span class="required">To</span>
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                    </label>
+                    <!--end::Label-->
+                    <input name="To" type="text" class="form-control form-control-solid" placeholder="Enter the reciver email" />
+                </div>
+                <!--end::Col-->
+
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+                <!--begin::Col-->
+                <div class="col-md-8 fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <span class="required">Message</span>
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                    </label>
+                    <!--end::Label-->
+                    @*<input id="summernote" name="Msg" type="text" class="form-control form-control-solid" placeholder="" />*@
+                    <textarea name="Msg" class="form-control" id="summernote" placeholder="" rows="4"></textarea>
+
+                </div>
+                <!--end::Col-->
+
+            </div>
+            <!--end::Input group-->
+
+            <button type="submit" class="btn-success btn">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Script{
+    @*<script src="~/demo1/assets/plugins/custom/summernote/summernote-bs4.js"></script>*@
+    <script src="@Url.Content("~/demo1/assets/plugins/custom/summernote/summernote-lite.js")"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Write comment',
+                tabsize: 2,
+                height: 100
+            });
+        });
+    </script>
+
+}

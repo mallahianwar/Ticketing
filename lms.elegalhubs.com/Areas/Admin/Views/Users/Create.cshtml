@@ -1,0 +1,261 @@
+﻿@model library.elegalhubs.com.lms.Admin.Users
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+<!--begin::Modal content-->
+<form id="kt_modal_add_user_form" class="form kt_modal_content submit-form" method="post" action="@Url.Action("Create", "Users")">
+    @Html.AntiForgeryToken()
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    @{
+        if (!ViewData.ModelState.IsValid)
+        {
+            <!--begin::Alert-->
+            <div class="alert alert-dismissible bg-light-danger d-flex flex-column flex-sm-row pt-5  pr-5 pb-0 mb-5" style="padding-right: 1rem;">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column pe-0 pe-sm-10">
+                    <!--begin::Content-->
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </div>
+                <!--end::Wrapper-->
+                <!--begin::Close-->
+                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                    <i class="fa fa-1x fa-close"></i>
+                </button>
+                <!--end::Close-->
+            </div>
+            <!--end::Alert-->
+
+        }
+    }
+
+
+
+    <!--begin::Scroll-->
+    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+
+        <!--begin::Input group-->
+        <div class="fv-row mb-7" style="margin: auto">
+            <!--begin::Label-->
+            <label class="d-block fw-bold fs-6 mb-5">Avatar</label>
+            <!--end::Label-->
+            <!--begin::Image input-->
+            <div class="image-input image-input-outline" data-kt-image-input="true" style="background: url('@Url.Content("~/demo1/assets/media/avatars/blank.png")')">
+                <!--begin::Preview existing avatar-->
+                <div class="image-input-wrapper w-125px h-125px" style="background-image: url('@Url.Content("~/demo1/assets/media/avatars/blank.png")')"></div>
+                <!--end::Preview existing avatar-->
+                <!--begin::Label-->
+                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                    <i class="bi bi-pencil-fill fs-7"></i>
+                    <!--begin::Inputs-->
+                    <input type="hidden" name="img" />
+                    <input type="file" asp-for="Avtar" accept=".png, .jpg, .jpeg" />
+                    <input type="hidden" name="avatar_remove" />
+                    <!--end::Inputs-->
+                </label>
+                <!--end::Label-->
+                <!--begin::Cancel-->
+                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                    <i class="bi bi-x fs-2"></i>
+                </span>
+                <!--end::Cancel-->
+                <!--begin::Remove-->
+                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                    <i class="bi bi-x fs-2"></i>
+                </span>
+                <!--end::Remove-->
+            </div>
+            <!--end::Image input-->
+            <!--begin::Hint-->
+            <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+            <!--end::Hint-->
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="required fw-bold fs-6 mb-2">Full Name</label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input placeholder="Full name" type="text" class="form-control form-control-solid mb-3 mb-lg-0" asp-for="FullName" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+            <!--end::Input-->
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="required fw-bold fs-6 mb-2">Email</label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input placeholder="example@domain.com" type="email" class="form-control form-control-solid mb-3 mb-lg-0" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <!--end::Input-->
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="required fw-bold fs-6 mb-2">Mobile</label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input placeholder="Enter your Mobile" type="text" class="form-control form-control-solid mb-3 mb-lg-0" asp-for="PhoneNumber" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            <!--end::Input-->
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="required fw-bold fs-6 mb-2">Address</label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input placeholder="Enter your Addree" type="text" class="form-control form-control-solid mb-3 mb-lg-0" asp-for="Address" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+            <!--end::Input-->
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="required fw-bold fs-6 mb-2">Password</label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input placeholder="Enter your Password" type="password" class="form-control form-control-solid mb-3 mb-lg-0" asp-for="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <!--end::Input-->
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <!--<div class="fv-row mb-7">-->
+        <!--begin::Label-->
+        <!--<label class="required fw-bold fs-6 mb-2">Confirmed Password</label>-->
+        <!--end::Label-->
+        <!--begin::Input-->
+        <!--<input placeholder="Enter your Confirmed Password" type="password" class="form-control form-control-solid mb-3 mb-lg-0" />-->
+        <!--end::Input-->
+        <!--</div>-->
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <!--<div class="mb-7">-->
+        <!--begin::Label-->
+        <!--<label class="required fw-bold fs-6 mb-5">Role</label>-->
+        <!--end::Label-->
+        <!--begin::Roles-->
+        <!--begin::Input row-->
+        <!--<div class="d-flex fv-row">-->
+        <!--begin::Radio-->
+        <!--<div class="form-check form-check-custom form-check-solid">-->
+        <!--begin::Input-->
+        <!--<input class="form-check-input me-3" name="user_role" type="radio" value="0" id="kt_modal_update_role_option_0" checked='checked' />
+
+        <input type="radio" class="form-check-input me-3" asp-for="FullName" />
+        <span asp-validation-for="FullName" class="text-danger"></span>-->
+        <!--end::Input-->
+        <!--begin::Label-->
+        <!--<label class="form-check-label" for="kt_modal_update_role_option_0">
+            <div class="fw-bolder text-gray-800">Administrator</div>
+            <div class="text-gray-600">Best for business owners and company administrators</div>
+        </label>-->
+        <!--end::Label-->
+        <!--</div>-->
+        <!--end::Radio-->
+        <!--</div>-->
+        <!--end::Input row-->
+        <!--<div class='separator separator-dashed my-5'></div>-->
+        <!--begin::Input row-->
+        <!--<div class="d-flex fv-row">-->
+        <!--begin::Radio-->
+        <!--<div class="form-check form-check-custom form-check-solid">-->
+        <!--begin::Input-->
+        <!--<input class="form-check-input me-3" name="user_role" type="radio" value="1" id="kt_modal_update_role_option_1" />-->
+        <!--end::Input-->
+        <!--begin::Label-->
+        <!--<label class="form-check-label" for="kt_modal_update_role_option_1">
+            <div class="fw-bolder text-gray-800">Developer</div>
+            <div class="text-gray-600">Best for developers or people primarily using the API</div>
+        </label>-->
+        <!--end::Label-->
+        <!--</div>-->
+        <!--end::Radio-->
+        <!--</div>-->
+        <!--end::Input row-->
+        <!--<div class='separator separator-dashed my-5'></div>-->
+        <!--begin::Input row-->
+        <!--<div class="d-flex fv-row">-->
+        <!--begin::Radio-->
+        <!--<div class="form-check form-check-custom form-check-solid">-->
+        <!--begin::Input-->
+        <!--<input class="form-check-input me-3" name="user_role" type="radio" value="2" id="kt_modal_update_role_option_2" />-->
+        <!--end::Input-->
+        <!--begin::Label-->
+        <!--<label class="form-check-label" for="kt_modal_update_role_option_2">
+            <div class="fw-bolder text-gray-800">Analyst</div>
+            <div class="text-gray-600">Best for people who need full access to analytics data, but don't need to update business settings</div>
+        </label>-->
+        <!--end::Label-->
+        <!--</div>-->
+        <!--end::Radio-->
+        <!--</div>-->
+        <!--end::Input row-->
+        <!--<div class='separator separator-dashed my-5'></div>-->
+        <!--begin::Input row-->
+        <!--<div class="d-flex fv-row">-->
+        <!--begin::Radio-->
+        <!--<div class="form-check form-check-custom form-check-solid">-->
+        <!--begin::Input-->
+        <!--<input class="form-check-input me-3" name="user_role" type="radio" value="3" id="kt_modal_update_role_option_3" />-->
+        <!--end::Input-->
+        <!--begin::Label-->
+        <!--<label class="form-check-label" for="kt_modal_update_role_option_3">
+            <div class="fw-bolder text-gray-800">Support</div>
+            <div class="text-gray-600">Best for employees who regularly refund payments and respond to disputes</div>
+        </label>-->
+        <!--end::Label-->
+        <!--</div>-->
+        <!--end::Radio-->
+        <!--</div>-->
+        <!--end::Input row-->
+        <!--<div class='separator separator-dashed my-5'></div>-->
+        <!--begin::Input row-->
+        <!--<div class="d-flex fv-row">-->
+        <!--begin::Radio-->
+        <!--<div class="form-check form-check-custom form-check-solid">-->
+        <!--begin::Input-->
+        <!--<input class="form-check-input me-3" name="user_role" type="radio" value="4" id="kt_modal_update_role_option_4" />-->
+        <!--end::Input-->
+        <!--begin::Label-->
+        <!--<label class="form-check-label" for="kt_modal_update_role_option_4">
+            <div class="fw-bolder text-gray-800">Trial</div>
+            <div class="text-gray-600">Best for people who need to preview content data, but don't need to make any updates</div>
+        </label>-->
+        <!--end::Label-->
+        <!--</div>-->
+        <!--end::Radio-->
+        <!--</div>-->
+        <!--end::Input row-->
+        <!--end::Roles-->
+        <!--</div>-->
+        <!--end::Input group-->
+    </div>
+    <!--end::Scroll-->
+    <!--begin::Actions-->
+    <div class="text-center pt-15">
+        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+        <button type="button" class="btn btn-save btn-primary" data-kt-users-modal-action="submit">
+            <span class="indicator-label">Submit</span>
+            <span class="indicator-progress">
+                Please wait...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </button>
+    </div>
+    <!--end::Actions-->
+</form>
+
+@section Script{
+    <script src="@Url.Content("~/js/Users/table.js")"></script>
+    
+}

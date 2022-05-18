@@ -1,0 +1,355 @@
+﻿@model library.elegalhubs.com.lms.Admin.Reports.IndexReport
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Style{
+                <style>
+                    .timeline-label:before {
+                        left:81px !important;
+                    }
+                    .timeline-label .timeline-label {
+                        width: 80px !important;
+                    }
+
+                </style>
+            }
+<div class="row g-3 mb-3 row-deck">
+    <div class="col-md-12 col-lg-6">
+        <div class="card ">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar p-5 lg  rounded-1 no-thumbnail color-defult">
+                        <i class="fa fa-project-diagram text-primary fs-4x"></i>
+                    </div>
+                    <div class="flex-fill ms-4" style="display: flex;align-items: center;">
+                        <div class="" style="display: flex;align-items: center;">
+                            <span style="font-size: 3rem;">@Model.ProjectsCount</span>
+                            <span style="padding-left: 1rem;">Projects</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <div class="card ">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar p-5 lg  rounded-1 no-thumbnail color-defult">
+                        <i class="fa fa-users text-primary fs-4x"></i>
+                    </div>
+                    <div class="flex-fill ms-4" style="display: flex;align-items: center;">
+                        <div class="" style="display: flex;align-items: center;">
+                            <span style="font-size: 3rem;">@Model.ContactsCount</span>
+                            <span style="padding-left: 1rem;">Contacts</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row g-3 mb-3 row-deck">
+    <div class="col-md-12 col-lg-3">
+        <div class="card ">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar p-5 lg  rounded-1 no-thumbnail bg-primary color-defult">
+                        @*<i class="fa fa-journal text-inverse-primary fs-2x"></i>*@
+                        <i class="las la-clipboard-list text-inverse-primary fs-2x"></i>
+
+                    </div>
+                    <div class="flex-fill ms-4">
+                        <div class="">Total Ticket</div>
+                        <h5 class="mb-0 ">@Model.TicketsCount</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-3">
+        <div class="card ">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+
+                    <div class="avatar p-5 lg  rounded-1 no-thumbnail bg-success color-defult">
+                        <i class="las la-list-alt text-inverse-success fs-2x"></i>
+                    </div>
+                    <div class="flex-fill ms-4">
+                        <div class="">Completed Ticket</div>
+                        <h5 class="mb-0 ">@Model.CompleteTicketsCount</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-3">
+        <div class="card ">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar p-5 lg  rounded-1 no-thumbnail  bg-danger">
+                        <i class="las la-envelope-open text-inverse-danger fs-2x"></i>
+                    </div>
+                    <div class="flex-fill ms-4">
+                        <div class="">Open Ticket</div>
+                        <h5 class="mb-0 ">@Model.OpenTicketsCount</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-3">
+        <div class="card ">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar p-5 lg  rounded-1 no-thumbnail  bg-warning">
+                        <i class="las la-spinner text-inverse-warning fs-2x"></i>
+                    </div>
+                    <div class="flex-fill ms-4">
+                        <div class="">Progress Ticket</div>
+                        <h5 class="mb-0 ">@Model.PendingTicketsCount</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--begin::Row-->
+<div class="row g-3 mb-3 row-deck">
+    <!--begin::Col-->
+    <div class="col-lg-6">
+        <!--begin::List Widget 2-->
+        <div class="card card-xl-stretch mb-xl-8">
+            <!--begin::Header-->
+            <div class="card-header border-0">
+                <h3 class="card-title fw-bolder text-dark">Latest Contacts</h3>
+
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-2">
+                <div class="table-responsive">
+                    <table class="table table-hover table-centered table-nowrap m-0">
+
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var contact in Model.Contacts)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img width="25" src="@Url.Content("~/demo1/assets/media/avatars/blank.png")" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm">
+                                        </td>
+
+                                        <td>
+                                            <h5 class="m-0 font-weight-normal">@contact.FirstName @contact.LastName</h5>
+                                            <p class="mb-0 text-muted"><small>Member Since @contact.CreatedAt.ToString("yyyy/MM/dd")</small></p>
+                                        </td>
+
+                                        <td>
+                                             @contact.Email
+                                        </td>
+
+                                        <td>
+                                            @contact.ContactNumber
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::List Widget 2-->
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-lg-6">
+        <!--begin::List Widget 5-->
+        <div class="card card-xxl-stretch">
+            <!--begin::Header-->
+            <div class="card-header align-items-center border-0 mt-4">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="fw-bolder mb-2 text-dark">Activities</span>
+                    @*<span class="text-muted fw-bold fs-7">890,344 Sales</span>*@
+                </h3>
+                
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-5">
+                <!--begin::Timeline-->
+                <div class="timeline-label">
+                    @{
+                        foreach (var comment in Model.TicketComments)
+                        {
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">@comment.CommentDate.ToString("yyyy/MM/dd")</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-primary fs-2x"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Text-->
+                                <div class="fw-mormal timeline-content text-muted ps-3">
+                                    @comment.user.Name 
+                                    add comment at Ticket No @comment.Tickets.TicketNumber : 
+                                    @Html.Raw(comment.Description)
+                                </div>
+                                <!--end::Text-->
+                            </div>
+                            <!--end::Item-->
+                        }
+                    }
+                    
+                </div>
+                <!--end::Timeline-->
+            </div>
+            <!--end: Card Body-->
+        </div>
+        <!--end: List Widget 5-->
+    </div>
+    <!--end::Col-->
+
+</div>
+<!--end::Row-->
+<!--begin::Row-->
+<div class="row g-3 mb-3 row-deck">
+    <!--begin::Col-->
+    <div class="col-lg-6">
+        <!--begin::List Widget 2-->
+        <div class="card card-xl-stretch mb-xl-8">
+            <!--begin::Header-->
+            <div class="card-header border-0">
+                <h3 class="card-title fw-bolder text-dark">Latest Chat Messages</h3>
+                
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-2">
+                @{
+                    foreach (var msg in Model.UsersMessages)
+                    {
+                        <!--begin::Item-->
+                        <div class="d-flex align-items-center mb-7">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px me-5">
+                                @*<img src="assets/media/avatars/150-1.jpg" class="" alt="" />*@
+                                @if (msg.Sender.Avtar != null)
+                                {
+                                    var base64 = Convert.ToBase64String(msg.Sender.Avtar);
+                                    var img = string.Format("data:image/jpg;base64,{0}", base64);
+                                    <img src="@img" width="50" height="50" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/demo1/assets/media/avatars/blank.png")" width="50" height="50" />
+                                }
+                            </div>
+                            <!--end::Avatar-->
+                            <!--begin::Text-->
+                            <div class="flex-grow-1">
+                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">@msg.Sender.FullName</a>
+                                <span class="text-muted d-block fw-bold">@msg.Content</span>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Item-->
+                    }
+                }
+
+
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::List Widget 2-->
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-lg-6">
+        <!--begin::List Widget 2-->
+        <div class="card card-xl-stretch mb-xl-8">
+            <!--begin::Header-->
+            <div class="card-header border-0">
+                <h3 class="card-title fw-bolder text-dark">Latest Tickets</h3>
+
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-2">
+                <div class="table-responsive">
+                    <table class="table table-hover table-centered table-nowrap m-0">
+
+                        <thead>
+                            <tr>
+                                <th width="50%">Subject</th>
+                                <th width="20%">Project</th>
+                                <th width="20%">Date</th>
+                                <th width="10%">Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var ticket in Model.Tickets)
+                                {
+                                    <tr>
+                                         <td>
+                                            @ticket.Subject
+                                        </td>
+                                        <td>
+                                            <h5 class="m-0 font-weight-normal">
+                                                @ticket.Projects.Name
+                                            </h5>
+                                        </td>
+                                       
+                                        <td>
+                                            @ticket.OpenDateTime.ToString("yyyy/MM/dd")
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-@ticket.PriorityTypes.Color">
+                                                @ticket.PriorityTypes.Priority
+
+                                            </span>
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::List Widget 2-->
+    </div>
+    <!--end::Col-->
+
+</div>
+<!--end::Row-->
+
+
+@section Script{
+    <script src="~/demo1/assets/js/custom/widgets.js"></script>
+}
